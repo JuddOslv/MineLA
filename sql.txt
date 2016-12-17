@@ -1,14 +1,3 @@
-2016-12-09
-创建school_class 表索引
-
-create index sc_teacher_user_id_index on school_class(teacher_user_id);
-create index sc_school_class_name_index on school_class(name);
-create index sc_school_id_index on school_class(school_id);
-
-create index user_real_name_index on user(real_name);
-
-
-
 2016-12-01
 添加注释：
 alter table exercise_study_record_item MODIFY COLUMN `IS_CORRECT` int comment '0：错误 1：正确 2：没做';
