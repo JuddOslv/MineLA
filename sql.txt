@@ -1,0 +1,205 @@
+2016-12-01
+添加注释：
+alter table exercise_study_record_item MODIFY COLUMN `IS_CORRECT` int comment '0：错误 1：正确 2：没做';
+
+
+
+2016-10-21
+school_class删除course_id 外键：
+alter table school_class drop foreign key FK944600EDBEEF2A54;
+
+
+alter table school_class drop foreign key FK_REFERENCE_69;
+删除course_id字段：
+alter table school_class drop column course_id;
+
+
+修改course_type_id顺序：
+alter table school_class change course_type_id course_type_id varchar(32) after grade;
+
+
+创建course_type_id外键：
+
+alter table school_class add constraint FK_SCHOOL_CLASS_COURSE_TYPE foreign key(course_type_id) references course_type(id);
+
+
+
+2016-10-13
+school_class添加course_type_id 字段
+alter table school_class add column COURSE_TYPE_ID varchar(32);
+
+
+
+将school_class 表中的course_id 转换成course_type_id
+update school_class inner join course on school_class.course_id = course.id set school_class.COURSE_TYPE_ID = course.type_id;
+
+
+
+
+
+create index index_sentence_listen_record_start_time on sentence_listen_record (start_time);
+
+create index index_sentence_listen_record_end_time on sentence_listen_record (end_time);
+
+单词听写
+insert into `exercise_word` 
+values('8a284e8f4e4d687f013h6274342b78ec','ff808181446cb7a601449b6829154515','come','','来，来到','How do you come to school?',null);
+insert into `exercise_word` 
+values('8a284e8f4e4d687f013h6273t62b78ec','ff808181446cb7a601449b6829214518','easy','','容易的',"It's so easy.",null);
+insert into `exercise_word` 
+values('8a284e8f4e4d682gn13h6274342b78ec','ff808181446cb7a601449b682936451b','goodbye','','再见','Goodbye, Lucy!',null);
+insert into `exercise_word` 
+values('8a284e8f4e4d687f02fv6274342b78ec','ff808181446cb7a601449b68294c451e','join','','加入，参加',"Let's join in them.",null);
+insert into `exercise_word` 
+values('8a284e8f4e4d687f013h62743421jkec','ff808181446cb7a601449b6829564521','let','','让',"Let's go to the park.",null);
+insert into `exercise_word` 
+values('8a284e8f4e8jl87f013h6274342b78ec','ff808181446cb7a601449b6829664524','Miss','','小姐，女士（称呼未婚妇女）','This is Miss Wang.',null);
+insert into `exercise_word` 
+values('8a284e4dbe4d687f013h6274342b78ec','ff808181446cb7a601449b682986452a','sing','','唱歌','Amy is singing in the classroom now.',null);
+insert into `exercise_word` 
+values('8a284e4dbe4d687f013h627ffg2b78ec','ff808181446cb7a601449b6829b64536','you','','你；你们','Do you like apples?',null);
+insert into `exercise_word` 
+values('8a284e4dbe4d687f013h627434dde8ec','ff808181446cb7a601449b6829bb4539','your','','你的；你们的',"Where's your schoolbag?",null);
+insert into `exercise_word` 
+values('8a284e4dbe4d687f013h6274342b78ec','ff808181446cb7a601449b682986452a','ready','','准备好的','Dinner is ready.',null);
+insert into `exercise_word` 
+values('8a284e4dbe4d687f013h6274342b78ec','ff808181446cb7a601449b682986452a','ready','','准备好的','Dinner is ready.',null);
+
+
+
+
+alter table exercise_item add column EXERCISE_RANK int comment '题目级别：识记、理解与应用两个级别，其中0-识记，1-理解与应用';
+
+alter table exercise_item change `EXERCISE_RANK` `EXERCISE_RANK`  int after ANSWER;
+
+update exercise_item set EXERCISE_RANK = '0';
+
+
+小练习新题型：
+
+insert into exercise values('s20','听音判断',20,'exercisesentence20','sentence','读|听','SentenceExercise20',120);
+
+UPDATE `hhbdev3`.`exercise` SET `NAME`='听句排序（文）' WHERE `ID`='s07';
+
+UPDATE `hhbdev3`.`exercise` SET `NAME`='听句排序（图）' WHERE `ID`='s16';
+
+
+
+线上更新：
+
+desc course;
+
+alter table course add column CREATE_TIME DATETIME ;
+alter table course add column LAST_MODIFIED_TIME DATETIME ;
+alter table course add column CREATE_USER VARCHAR (32) ;
+alter table course add column LAST_MODIFIED_USER VARCHAR (32);
+
+alter table course change `CREATE_TIME` `CREATE_TIME`  DATETIME after UNITIDS;
+
+desc course_type;
+
+alter table course_type add column CREATE_TIME DATETIME ;
+alter table course_type add column LAST_MODIFIED_TIME DATETIME ;
+alter table course_type add column CREATE_USER VARCHAR (32) ;
+alter table course_type add column LAST_MODIFIED_USER VARCHAR (32);
+
+desc course_textbook;
+
+alter table course_textbook add column CREATE_TIME DATETIME ;
+alter table course_textbook add column LAST_MODIFIED_TIME DATETIME ;
+alter table course_textbook add column CREATE_USER VARCHAR (32) ;
+alter table course_textbook add column LAST_MODIFIED_USER VARCHAR (32);
+
+
+desc course_textbook_menu;
+
+alter table course_textbook_menu add column CREATE_TIME DATETIME ;
+alter table course_textbook_menu add column LAST_MODIFIED_TIME DATETIME ;
+alter table course_textbook_menu add column CREATE_USER VARCHAR (32) ;
+alter table course_textbook_menu add column LAST_MODIFIED_USER VARCHAR (32);
+
+
+desc course_textbook_block;
+
+alter table course_textbook_block add column CREATE_TIME DATETIME ;
+alter table course_textbook_block add column LAST_MODIFIED_TIME DATETIME ;
+alter table course_textbook_block add column CREATE_USER VARCHAR (32) ;
+alter table course_textbook_block add column LAST_MODIFIED_USER VARCHAR (32);
+
+
+
+
+desc unit_word;
+
+alter table unit_word add column CREATE_TIME DATETIME ;
+alter table unit_word add column LAST_MODIFIED_TIME DATETIME ;
+alter table unit_word add column CREATE_USER VARCHAR (32) ;
+alter table unit_word add column LAST_MODIFIED_USER VARCHAR (32);
+
+desc word_dictionary;
+
+alter table word_dictionary add column CREATE_TIME DATETIME ;
+alter table word_dictionary add column LAST_MODIFIED_TIME DATETIME ;
+alter table word_dictionary add column CREATE_USER VARCHAR (32) ;
+alter table word_dictionary add column LAST_MODIFIED_USER VARCHAR (32);
+
+
+添加索引：
+create INDEX INDEX_COURSE_LAST_MODIFIED_TIME on course(LAST_MODIFIED_TIME); 
+
+create INDEX INDEX_COURSE_TYPE_LAST_MODIFIED_TIME on course_type(LAST_MODIFIED_TIME);
+
+create INDEX INDEX_COURSE_TEXTBOOK_LAST_MODIFIED_TIME on `course_textbook` (LAST_MODIFIED_TIME);
+
+create INDEX INDEX_TEXTBOOK_MENU_LAST_MODIFIED_TIME on `course_textbook_menu` (LAST_MODIFIED_TIME);
+
+create index INDEX_TEXTBOOK_BLOCK_LAST_MODIFIED_TIME on `course_textbook_block` (LAST_MODIFIED_TIME);
+
+create index INDEX_UNIT_WORD_LAST_MODIFIED_TIME on `unit_word` (LAST_MODIFIED_TIME);
+
+create index INDEX_WORD_DICTIONARY_LAST_MODIFIED_TIME on `word_dictionary` (LAST_MODIFIED_TIME);
+
+
+
+
+create INDEX INDEX_COURSE_CREATE_TIME on course(CREATE_TIME); 
+
+create INDEX INDEX_COURSE_TYPE_CREATE_TIME on course_type(CREATE_TIME);
+
+create INDEX INDEX_COURSE_TEXTBOOK_CREATE_TIME on `course_textbook` (CREATE_TIME);
+
+create INDEX INDEX_TEXTBOOK_MENU_CREATE_TIME on `course_textbook_menu` (CREATE_TIME);
+
+create index INDEX_TEXTBOOK_BLOCK_CREATE_TIME on `course_textbook_block` (CREATE_TIME);
+
+create index INDEX_UNIT_WORD_CREATE_TIME on `unit_word` (CREATE_TIME);
+
+create index INDEX_WORD_DICTIONARY_CREATE_TIME on `word_dictionary` (CREATE_TIME);
+
+show index from course;
+show index from course_type;
+show index from course_textbook;
+show index from course_textbook_menu;
+show index from course_textbook_block;
+show index from unit_word;
+show index from word_dictionary;
+
+
+
+添加课本高度宽度：
+alter table course add column COURSE_PAGE_WIDTH int;
+
+alter table course change COURSE_PAGE_WIDTH COURSE_PAGE_WIDTH int after type_id;
+
+
+
+alter table course add column COURSE_PAGE_HEIGHT int;
+
+alter table course change COURSE_PAGE_HEIGHT COURSE_PAGE_HEIGHT int after COURSE_PAGE_WIDTH;
+
+
+添加单元名称字段
+alter table course_textbook_menu add column chapter_heading varchar(256);
+
+
+alter table course_textbook_menu change chapter_heading chapter_heading varchar(256) after chapter_name;
